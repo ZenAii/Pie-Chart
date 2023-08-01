@@ -19,18 +19,9 @@ const int TAILLE_POLICE_LABEL = 10;
 typedef struct
 {
     double pourcentage;
-    char *etiquette;
+    const char *etiquette;
     int couleur[3]; // Tableau pour stocker les composantes RVB (rouge, vert, bleu)
 } SegmentPie;
-
-// Fonction pour libérer la mémoire allouée aux étiquettes des segments
-void libererEtiquettesSegments(SegmentPie *segments, int nbSegments)
-{
-    for (int i = 0; i < nbSegments; i++)
-    {
-        free(segments[i].etiquette);
-    }
-}
 
 // Fonction pour créer un graphique Pie Chart avec les données fournies et les options de personnalisation
 void creerPieChart(SegmentPie *segments, int nbSegments, const char *fichierSortie, const char *titre, int couleurFond[3], int couleurBordure[3], int utiliserCouleurFondPersonnalisee)
@@ -140,7 +131,6 @@ void creerPieChart(SegmentPie *segments, int nbSegments, const char *fichierSort
 
     // Libérer la mémoire
     gdImageDestroy(img);
-    libererEtiquettesSegments(segments, nbSegments);
 }
 
 int main(int argc, char *argv[])
@@ -155,11 +145,11 @@ int main(int argc, char *argv[])
 
     // Exemple de données pour le Pie Chart
     SegmentPie segments[] = {
-        {15.0, strdup("Segment 1"), {255, 0, 0}},   // Rouge
-        {5.0, strdup("Segment 2"), {0, 255, 0}},    // Vert
-        {15.0, strdup("Segment 3"), {0, 0, 255}},   // Bleu
-        {15.0, strdup("Segment 4"), {255, 255, 0}}, // Jaune
-        {50.0, strdup("Segment 5"), {255, 0, 255}}  // Violet
+        {15.0, "Segment 1", {255, 0, 0}},   // Rouge
+        {5.0, "Segment 2", {0, 255, 0}},    // Vert
+        {15.0, "Segment 3", {0, 0, 255}},   // Bleu
+        {15.0, "Segment 4", {255, 255, 0}}, // Jaune
+        {50.0, "Segment 5", {255, 0, 255}}  // Violet
     };
 
     int nbSegments = sizeof(segments) / sizeof(segments[0]);
