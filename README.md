@@ -12,6 +12,25 @@ Avant d'exécuter ce programme, assurez-vous d'avoir les éléments suivants :
 sudo apt-get install libgd-dev
 
 
+## Constantes
+
+- `IMG_LARGEUR`: Largeur de l'image en pixels.
+- `IMG_HAUTEUR`: Hauteur de l'image en pixels.
+- `TAILLE_POLICE_TITRE`: Taille de la police pour le titre.
+- `TAILLE_POLICE_LABEL`: Taille de la police pour les étiquettes.
+
+## Structure
+
+- `SegmentPie`: Structure pour stocker les données d'un segment de Pie Chart.
+  - `pourcentage`: Le pourcentage du segment dans le graphique.
+  - `etiquette`: L'étiquette du segment (nom ou description).
+  - `couleur[3]`: Tableau pour stocker les composantes RVB (rouge, vert, bleu) de la couleur du segment.
+
+## Fonctions
+
+- `libererEtiquettesSegments`: Fonction pour libérer la mémoire allouée aux étiquettes des segments.
+- `creerPieChart`: Fonction pour créer un graphique Pie Chart avec les données fournies et les options de personnalisation.
+
 ## Compilation
 
 Pour compiler le programme, exécutez la commande suivante :
