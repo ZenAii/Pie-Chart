@@ -35,7 +35,7 @@ void freeSegmentLabels(PieSegment *segments, int numSegments)
 }
 
 // Fonction pour créer un graphique Pie Chart avec les données fournies et les options de personnalisation
-void createPieChart(PieSegment *segments, int numSegments, const char *outputFile, const char *title, int bgColorRed, int bgColorGreen, int bgColorBlue, int borderColorRed, int borderColorGreen, int borderColorBlue)
+void createPieChart(PieSegment *segments, int numSegments, const char *outputFile, const char *title, int bgColorRed, int bgColorGreen, int bgColorBlue, int borderColorRed, int borderColorGreen, int borderColorBlue, int useCustomBgColor)
 {
     // Vérifier que la somme des pourcentages est égale à 100
     double totalPercentage = 0.0;
@@ -49,10 +49,21 @@ void createPieChart(PieSegment *segments, int numSegments, const char *outputFil
         return;
     }
 
-    // Créer une image avec fond transparent
-    gdImagePtr img = gdImageCreateTrueColor(imgWidth, imgHeight);
-    int bgColor = gdImageColorAllocate(img, bgColorRed, bgColorGreen, bgColorBlue);
-    gdImageFill(img, 0, 0, bgColor);
+    // Créer une image avec fond transparent ou avec la couleur de fond personnalisée
+    gdImagePtr img;
+    if (useCustomBgColor)
+    {
+        img = gdImageCreateTrueColor(imgWidth, imgHeight);
+        int bgColor = gdImageColorAllocate(img, bgColorRed, bgColorGreen, bgColorBlue);
+        gdImageFill(img, 0, 0, bgColor);
+    }
+    else
+    {
+        img = gdImageCreateTrueColor(imgWidth, imgHeight);
+        gdImageSaveAlpha(img, 1);
+        int transparent = gdImageColorAllocateAlpha(img, 0, 0, 0, gdAlphaTransparent);
+        gdImageFill(img, 0, 0, transparent);
+    }
 
     // Initialiser les variables pour le dessin du Pie Chart
     int centerX = imgWidth / 2;
@@ -137,11 +148,13 @@ void createPieChart(PieSegment *segments, int numSegments, const char *outputFil
 
 int main(int argc, char *argv[])
 {
-    if (argc < 2)
+    if (argc < 3)
     {
-        printf("Utilisation: %s <fichier_sortie.png>\n", argv[0]);
+        printf("Utilisation: %s <fichier_sortie.png> <0|1>\n", argv[0]);
         return 1;
     }
+
+    int useCustomBgColor = atoi(argv[2]);
 
     // Exemple de données pour le Pie Chart
     PieSegment segments[] = {
@@ -155,7 +168,7 @@ int main(int argc, char *argv[])
     int numSegments = sizeof(segments) / sizeof(segments[0]);
 
     // Appeler la fonction pour créer le Pie Chart avec personnalisation supplémentaire
-    createPieChart(segments, numSegments, argv[1], "Exemple de Pie Chart", 255, 255, 255, 0, 0, 0);
+    createPieChart(segments, numSegments, argv[1], "Exemple de Pie Chart", 255, 255, 255, 0, 0, 0, useCustomBgColor);
 
     return 0;
 }
