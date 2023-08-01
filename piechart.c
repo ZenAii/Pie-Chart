@@ -3,7 +3,6 @@
 #include <gd.h>
 #include <math.h>
 #include <string.h>
-#include <gd.h>
 #include <gdfontg.h>
 #include <gdfontmb.h>
 #include <gdfontl.h>
