@@ -116,6 +116,43 @@ depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
+#=============================================================================
+# Target rules for targets named PieChart
+
+# Build rule for target.
+PieChart: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 PieChart
+.PHONY : PieChart
+
+# fast build rule for target.
+PieChart/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PieChart.dir/build.make CMakeFiles/PieChart.dir/build
+.PHONY : PieChart/fast
+
+Pie-Chart/piechart.o: Pie-Chart/piechart.c.o
+.PHONY : Pie-Chart/piechart.o
+
+# target to build an object file
+Pie-Chart/piechart.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PieChart.dir/build.make CMakeFiles/PieChart.dir/Pie-Chart/piechart.c.o
+.PHONY : Pie-Chart/piechart.c.o
+
+Pie-Chart/piechart.i: Pie-Chart/piechart.c.i
+.PHONY : Pie-Chart/piechart.i
+
+# target to preprocess a source file
+Pie-Chart/piechart.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PieChart.dir/build.make CMakeFiles/PieChart.dir/Pie-Chart/piechart.c.i
+.PHONY : Pie-Chart/piechart.c.i
+
+Pie-Chart/piechart.s: Pie-Chart/piechart.c.s
+.PHONY : Pie-Chart/piechart.s
+
+# target to generate assembly for a file
+Pie-Chart/piechart.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PieChart.dir/build.make CMakeFiles/PieChart.dir/Pie-Chart/piechart.c.s
+.PHONY : Pie-Chart/piechart.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -124,6 +161,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... PieChart"
+	@echo "... Pie-Chart/piechart.o"
+	@echo "... Pie-Chart/piechart.i"
+	@echo "... Pie-Chart/piechart.s"
 .PHONY : help
 
 

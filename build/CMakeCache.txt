@@ -145,7 +145,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=Project
+CMAKE_PROJECT_NAME:STATIC=PieChart
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -209,14 +209,23 @@ CMAKE_STRIP:FILEPATH=/usr/bin/strip
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
-//Value Computed by CMake
-Project_BINARY_DIR:STATIC=/home/roulois/Bureau/projet/build
+//The directory containing a CMake configuration file for GD.
+GD_DIR:PATH=GD_DIR-NOTFOUND
+
+//Path to a file.
+GD_INCLUDE_DIRS:PATH=/usr/include
+
+//Path to a library.
+GD_LIBRARIES:FILEPATH=/usr/lib/x86_64-linux-gnu/libgd.so
 
 //Value Computed by CMake
-Project_IS_TOP_LEVEL:STATIC=ON
+PieChart_BINARY_DIR:STATIC=/home/roulois/Bureau/projet/build
 
 //Value Computed by CMake
-Project_SOURCE_DIR:STATIC=/home/roulois/Bureau/projet
+PieChart_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+PieChart_SOURCE_DIR:STATIC=/home/roulois/Bureau/projet
 
 
 ########################
@@ -366,4 +375,10 @@ CMAKE_STRIP-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding GD
+FIND_PACKAGE_MESSAGE_DETAILS_GD:INTERNAL=[/usr/lib/x86_64-linux-gnu/libgd.so][/usr/include][v()]
+//ADVANCED property for variable: GD_INCLUDE_DIRS
+GD_INCLUDE_DIRS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GD_LIBRARIES
+GD_LIBRARIES-ADVANCED:INTERNAL=1
 

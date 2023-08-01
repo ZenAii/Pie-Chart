@@ -1,0 +1,1 @@
+/usr/bin/cc -rdynamic CMakeFiles/PieChart.dir/Pie-Chart/piechart.c.o -o PieChart  -lgd 
