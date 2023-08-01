@@ -6,7 +6,7 @@ Ce programme en langage C utilise la bibliothèque GD pour générer un graphiqu
 
 Avant d'exécuter ce programme, assurez-vous d'avoir les éléments suivants :
 
-1. Un compilateur C (tel que GCC) pour compiler le code source.
+1. Un compilateur C pour compiler le code source.
 2. La bibliothèque GD installée sur votre système. Si vous ne l'avez pas déjà, vous pouvez l'installer en utilisant la commande suivante (pour Debian/Ubuntu) :
 
 sudo apt-get install libgd-dev
