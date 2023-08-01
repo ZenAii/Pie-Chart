@@ -7,6 +7,14 @@
 #include <gdfontmb.h>
 #include <gdfontl.h>
 
+// Constantes pour la taille de l'image
+const int imgWidth = 800;
+const int imgHeight = 700;
+
+// Constantes pour la taille de la police
+const int titleFontsize = 20;
+const int labelFontsize = 10;
+
 // Structure pour stocker les données d'un segment de Pie Chart
 typedef struct
 {
@@ -17,8 +25,17 @@ typedef struct
     int blue;
 } PieSegment;
 
+// Fonction pour libérer la mémoire allouée aux labels des segments
+void freeSegmentLabels(PieSegment *segments, int numSegments)
+{
+    for (int i = 0; i < numSegments; i++)
+    {
+        free(segments[i].label);
+    }
+}
+
 // Fonction pour créer un graphique Pie Chart avec les données fournies et les options de personnalisation
-void createPieChart(PieSegment *segments, int numSegments, const char *outputFile, const char *title, int titleFontsize, int labelFontsize)
+void createPieChart(PieSegment *segments, int numSegments, const char *outputFile, const char *title, int bgColorRed, int bgColorGreen, int bgColorBlue, int borderColorRed, int borderColorGreen, int borderColorBlue)
 {
     // Vérifier que la somme des pourcentages est égale à 100
     double totalPercentage = 0.0;
@@ -32,13 +49,9 @@ void createPieChart(PieSegment *segments, int numSegments, const char *outputFil
         return;
     }
 
-    // Taille de l'image
-    int imgWidth = 800;
-    int imgHeight = 700;
-
     // Créer une image avec fond transparent
     gdImagePtr img = gdImageCreateTrueColor(imgWidth, imgHeight);
-    int bgColor = gdImageColorAllocateAlpha(img, 255, 255, 255, 127);
+    int bgColor = gdImageColorAllocate(img, bgColorRed, bgColorGreen, bgColorBlue);
     gdImageFill(img, 0, 0, bgColor);
 
     // Initialiser les variables pour le dessin du Pie Chart
@@ -48,7 +61,9 @@ void createPieChart(PieSegment *segments, int numSegments, const char *outputFil
     int startAngle = 0;
     int endAngle = 0;
 
-    gdImageFilledEllipse(img, centerX, centerY, (radius + 2) * 2, (radius + 2) * 2, gdImageColorAllocate(img, 0, 0, 0));
+    // Dessiner le contour du Pie Chart
+    int borderColor = gdImageColorAllocate(img, borderColorRed, borderColorGreen, borderColorBlue);
+    gdImageFilledEllipse(img, centerX, centerY, (radius + 2) * 2, (radius + 2) * 2, borderColor);
 
     // Dessiner le Pie Chart
     for (int i = 0; i < numSegments; i++)
@@ -58,7 +73,6 @@ void createPieChart(PieSegment *segments, int numSegments, const char *outputFil
         endAngle = startAngle + (int)(360 * segment.percentage / 100);
 
         int color = gdImageColorAllocate(img, segment.red, segment.green, segment.blue);
-        int borderColor = gdImageColorAllocate(img, 0, 0, 0);
 
         gdImageFilledArc(img, centerX, centerY, radius * 2, radius * 2, startAngle, endAngle, color, gdPie);
 
@@ -78,7 +92,7 @@ void createPieChart(PieSegment *segments, int numSegments, const char *outputFil
 
         double labelScaleFactor = 3;
         int labelFontSizeScaled = (int)(labelFontsize * labelScaleFactor);
-        gdImageString(img, gdFontMediumBold, titleX, titleY, (unsigned char *)segment.label, gdImageColorAllocate(img, 0, 0, 0));
+        gdImageString(img, gdFontMediumBold, titleX, titleY, (unsigned char *)segment.label, borderColor);
 
         int lineStartX = centerX + (int)(radius * cos(midAngle * M_PI / 180));
         int lineStartY = centerY + (int)(radius * sin(midAngle * M_PI / 180));
@@ -90,7 +104,7 @@ void createPieChart(PieSegment *segments, int numSegments, const char *outputFil
         int percentageX = centerX + (int)((titleRadius + labelFontsize + 25) * cos(midAngle * M_PI / 180));
         int percentageY = centerY + (int)((titleRadius + labelFontsize + 25) * sin(midAngle * M_PI / 180));
 
-        gdImageString(img, gdFontMediumBold, percentageX, percentageY, (unsigned char *)percentageStr, gdImageColorAllocate(img, 0, 0, 0));
+        gdImageString(img, gdFontMediumBold, percentageX, percentageY, (unsigned char *)percentageStr, borderColor);
 
         startAngle = endAngle;
     }
@@ -103,15 +117,22 @@ void createPieChart(PieSegment *segments, int numSegments, const char *outputFil
     int titleY = 30; // Position verticale pour le titre centré en haut de l'image
 
     // Afficher le titre centré en haut de l'image
-    gdImageString(img, gdFontGiant, titleX, titleY, (unsigned char *)title, gdImageColorAllocate(img, 0, 0, 0));
+    gdImageString(img, gdFontGiant, titleX, titleY, (unsigned char *)title, borderColor);
 
     // Sauvegarder l'image dans le fichier de sortie
     FILE *output = fopen(outputFile, "wb");
+    if (output == NULL)
+    {
+        printf("Erreur : Impossible de créer le fichier de sortie.\n");
+        gdImageDestroy(img);
+        return;
+    }
     gdImagePng(img, output);
     fclose(output);
 
     // Libérer la mémoire
     gdImageDestroy(img);
+    freeSegmentLabels(segments, numSegments);
 }
 
 int main(int argc, char *argv[])
@@ -124,20 +145,17 @@ int main(int argc, char *argv[])
 
     // Exemple de données pour le Pie Chart
     PieSegment segments[] = {
-        {15.0, "Segment 1", 255, 0, 0},   // Rouge
-        {5.0, "Segment 2", 0, 255, 0},    // Vert
-        {15.0, "Segment 3", 0, 0, 255},   // Bleu
-        {15.0, "Segment 4", 255, 255, 0}, // Jaune
-        {50.0, "Segment 5", 255, 0, 255}  // Violet
+        {15.0, strdup("Segment 1"), 255, 0, 0},   // Rouge
+        {5.0, strdup("Segment 2"), 0, 255, 0},    // Vert
+        {15.0, strdup("Segment 3"), 0, 0, 255},   // Bleu
+        {15.0, strdup("Segment 4"), 255, 255, 0}, // Jaune
+        {50.0, strdup("Segment 5"), 255, 0, 255}  // Violet
     };
 
     int numSegments = sizeof(segments) / sizeof(segments[0]);
 
-    int labelFontsize = 10;
-    int titleFontsize = 20;
-
     // Appeler la fonction pour créer le Pie Chart avec personnalisation supplémentaire
-    createPieChart(segments, numSegments, argv[1], "Exemple de Pie Chart", titleFontsize, labelFontsize);
+    createPieChart(segments, numSegments, argv[1], "Exemple de Pie Chart", 255, 255, 255, 0, 0, 0);
 
     return 0;
 }
