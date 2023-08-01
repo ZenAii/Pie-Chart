@@ -24,7 +24,7 @@ typedef struct
 } SegmentPie;
 
 // Fonction pour créer un graphique Pie Chart avec les données fournies et les options de personnalisation
-void creerPieChart(SegmentPie *segments, int nbSegments, const char *fichierSortie, const char *titre, int couleurFond[3], int couleurBordure[3], int utiliserCouleurFondPersonnalisee)
+void creerPieChart(SegmentPie *segments, int nbSegments, const char *fichierSortie, const char *titre, int couleurFond[3], int couleurBordure[3], int CustomBGColor)
 {
     // Vérifier que la somme des pourcentages est égale à 100
     double pourcentageTotal = 0.0;
@@ -40,7 +40,7 @@ void creerPieChart(SegmentPie *segments, int nbSegments, const char *fichierSort
 
     // Créer une image avec fond transparent ou avec la couleur de fond personnalisée
     gdImagePtr img;
-    if (utiliserCouleurFondPersonnalisee)
+    if (CustomBGColor)
     {
         img = gdImageCreateTrueColor(IMG_LARGEUR, IMG_HAUTEUR);
         int couleurFondImage = gdImageColorAllocate(img, couleurFond[0], couleurFond[1], couleurFond[2]);
@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    int utiliserCouleurFondPersonnalisee = atoi(argv[2]);
+    int CustomBGColor = atoi(argv[2]);
 
     // Exemple de données pour le Pie Chart
     SegmentPie segments[] = {
@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
     int nbSegments = sizeof(segments) / sizeof(segments[0]);
 
     // Appeler la fonction pour créer le Pie Chart avec personnalisation supplémentaire
-    creerPieChart(segments, nbSegments, argv[1], "Exemple de Pie Chart", (int[3]){255, 255, 255}, (int[3]){0, 0, 0}, utiliserCouleurFondPersonnalisee);
+    creerPieChart(segments, nbSegments, argv[1], "Exemple de Pie Chart", (int[3]){255, 255, 255}, (int[3]){0, 0, 0}, CustomBGColor);
 
     return 0;
 }

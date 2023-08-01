@@ -44,10 +44,12 @@ Assurez-vous que la bibliothèque GD est correctement installée et disponible l
 
 Après avoir compilé le programme, vous pouvez l'exécuter avec la commande suivante :
 
-./pie_chart <fichier_sortie.png> [`0` pour un font transparent | `1` pour un font en couleur]
+./pie_chart <fichier_sortie.png> [0|1]
 
 
 - `<fichier_sortie.png>` : Le nom du fichier de sortie qui contiendra le graphique Pie Chart généré au format PNG.
+
+- `[0|1]` : Remplacez ici par un `0` si vous voulez que le font de votre graphique soit transparent, sinon, remplacez par un `1` pour avoir la couleur défini dans customBGColor
 
 ## Personnalisation
 
