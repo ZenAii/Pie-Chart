@@ -25,14 +25,14 @@ Assurez-vous que la bibliothèque GD est correctement installée et disponible l
 
 Après avoir compilé le programme, vous pouvez l'exécuter avec la commande suivante :
 
-./pie_chart <fichier_sortie.png>
+./pie_chart <fichier_sortie.png> [`0` pour un font transparent | `1` pour un font en couleur]
 
 
 - `<fichier_sortie.png>` : Le nom du fichier de sortie qui contiendra le graphique Pie Chart généré au format PNG.
 
 ## Personnalisation
 
-Vous pouvez personnaliser le graphique Pie Chart en modifiant les données des segments dans la fonction `main`. Vous pouvez également ajuster les tailles des polices des titres et des pourcentages en modifiant les variables `labelFontsize` et `titleFontsize` dans la fonction `main`.
+Vous pouvez personnaliser le graphique Pie Chart en modifiant les données des segments dans la fonction `main`. Vous pouvez également ajuster les tailles des polices des titres et des pourcentages en modifiant les variables `labelFontsize` et `titleFontsize` dans la fonction `main` ainsi que changer la couleur du font dans CustomBGColor.
 
 ## Exemple de données
 
