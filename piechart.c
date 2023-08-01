@@ -96,14 +96,13 @@ void createPieChart(PieSegment *segments, int numSegments, const char *outputFil
     }
 
     // Calculer la largeur du titre global
-    int titleWidth = gdFontMediumBold->w * strlen(title);
+    int titleWidth = gdFontGiant->w * strlen(title);
 
     // Calculer la position X pour centrer le titre horizontalement
     int titleX = centerX - (titleWidth / 2);
-    int titleY = 100; // Position verticale fixe pour le titre
+    int titleY = 30; // Position verticale pour le titre centré en haut de l'image
 
-    double titleScaleFactor = 1.5;
-    int titleFontSizeScaled = (int)(titleFontsize * titleScaleFactor);
+    // Afficher le titre centré en haut de l'image
     gdImageString(img, gdFontGiant, titleX, titleY, (unsigned char *)title, gdImageColorAllocate(img, 0, 0, 0));
 
     // Sauvegarder l'image dans le fichier de sortie
@@ -125,11 +124,11 @@ int main(int argc, char *argv[])
 
     // Exemple de données pour le Pie Chart
     PieSegment segments[] = {
-        {15.0, "Segment 1", 255, 0, 0},  // Rouge
-        {15.0, "Segment 2", 0, 255, 0},  // Vert
-        {50.0, "Segment 3", 0, 0, 255},  // Bleu
-        {5.0, "Segment 4", 255, 255, 0}, // Jaune
-        {15.0, "Segment 5", 255, 0, 255} // Violet
+        {15.0, "Segment 1", 255, 0, 0},   // Rouge
+        {5.0, "Segment 2", 0, 255, 0},    // Vert
+        {15.0, "Segment 3", 0, 0, 255},   // Bleu
+        {15.0, "Segment 4", 255, 255, 0}, // Jaune
+        {50.0, "Segment 5", 255, 0, 255}  // Violet
     };
 
     int numSegments = sizeof(segments) / sizeof(segments[0]);
