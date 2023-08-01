@@ -42,7 +42,7 @@ Le programme utilise un exemple de données pour générer le graphique Pie Char
 
 Voici un exemple d'image générée par le programme :
 
-![Exemple de Pie Chart](./Pie-Chart/out.png)
+![Exemple de Pie Chart](./demo/out.png)
 
 ## Auteur
 
